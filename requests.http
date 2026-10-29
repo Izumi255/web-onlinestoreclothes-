@@ -1,0 +1,72 @@
+### ============================================================
+### Практична робота №4: REST API для інтернет-магазину (Варіант 3)
+### Рівень 2 («Добре»): повний REST CRUD, HTTP-статуси та In-Memory Service
+### Категорія: Одяг та взуття (/clothes)
+### ============================================================
+
+@baseUrl = http://localhost:3000
+
+### 1. Отримати список усіх товарів (GET /clothes)
+# Очікується: 200 OK і повний масив товарів зі сховища
+GET {{baseUrl}}/clothes
+Accept: application/json
+
+###
+
+### 2. Успішне отримання існуючого запису за ID (GET /clothes/1)
+# Очікується: 200 OK і знайдений об'єкт
+GET {{baseUrl}}/clothes/1
+Accept: application/json
+
+###
+
+### 3. Перевірка обробки 404 Not Found для неіснуючого запису (GET /clothes/99999)
+# Очікується: 404 Not Found з відповідним JSON повідомленням
+GET {{baseUrl}}/clothes/99999
+Accept: application/json
+
+###
+
+### 4. Створення нового товару (POST /clothes)
+# Очікується: 201 Created та повернення створеного об'єкта зі згенерованим id
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{
+  "title": "Куртка вітрозахисна Softshell",
+  "price": 3800,
+  "size": "XL",
+  "material": "Поліестер, мембрана 10000",
+  "color": "Хакі"
+}
+
+###
+
+### 5. Часткове оновлення існуючого товару (PATCH /clothes/1)
+# Оновлюємо лише окремі поля (ціну та колір)
+PATCH {{baseUrl}}/clothes/1
+Content-Type: application/json
+
+{
+  "price": 1650,
+  "color": "Графітовий"
+}
+
+###
+
+### 6. Перевірка результату оновлення (GET /clothes/1)
+GET {{baseUrl}}/clothes/1
+Accept: application/json
+
+###
+
+### 7. Видалення товару за ID (DELETE /clothes/1)
+# Очікується: 204 No Content (порожнє тіло відповіді)
+DELETE {{baseUrl}}/clothes/1
+
+###
+
+### 8. Перевірка, що видалений запис не знайдено (GET /clothes/1)
+# Очікується: 404 Not Found
+GET {{baseUrl}}/clothes/1
+Accept: application/json
